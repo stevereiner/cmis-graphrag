@@ -1,0 +1,7 @@
+cmislib
+neo4j
+neo4j-graphrag[openai]==1.7.0
+python-dotenv
+numpy
+rapidfuzz
+spacy
