@@ -9,4 +9,5 @@ For Neo4j KG building and GraphRAG the Neo4j neo4j-graphrag packaged was used
 For reference info on neo4j-graphrag and other libraries supporting KG building, 
 vector embeddings / RAG, and KG graphs / GraphRAG :
 
-[Libraries Supporting KG building and GraphRAG](./Libraries Supporting KG building and GraphRAG.md)
+[Libraries Supporting KG building and GraphRAG](https://github.com/stevereiner/cmis-graphrag/blob/main/Libraries%20Supporting%20KG%20building%20and%20GraphRAG.md)
+
