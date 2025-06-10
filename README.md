@@ -16,9 +16,9 @@ Supports using OpenAI (gpt-4.1 etc.) or Ollama LLMs (llmma3.1 etc.) models
 Your doc mgt server needs to support CMIS 1.1 (like Alfresco)
 
 
-**Requirements for  neo4j-graphrag package  **
+## Requirements for  neo4j-graphrag package
 
-Your Neo4j server 
+## Your Neo4j server 
 Neo4j versions supported:
 Neo4j >=5.18.1
 
@@ -37,14 +37,13 @@ APOC Full is not available in any AuraDB tier for security reasons
 4. In the Neo4j Desktop version, you can install the plugins in the expand out side panel in the GUI. It does a restart 
 whith each plugin you enable
 
-Python versions supported by neo4j-graphrag:
+## Python versions supported by neo4j-graphrag:
 Python 3.12
 Python 3.11
 Python 3.10
 Python 3.9
 
-
-** To Configure **
+## To Configure
 1. Copy dot-env-sample.txt to .env to configure for your CMIS repository, Neo4j server, whether to use openai,
 and what models to use for openai and ollama
 2. Also configure in .env what folder you have GraphRAG documents (pdf only for now). Start with a folder with just
@@ -53,7 +52,7 @@ ome doc (I sed the cmispress.pdf file in this proect ). FOLDER_PATH="/Shared/Gra
 4. in neo4j-util.py you can figure to enable schema an configure entities and relationships
 (Note LLMs have gotten good at enntity recognition, that is more to  restrict)
 
-** To Build ** 
+## To Build
 1. Setup virtual env
 python -m venv  .my-venv
 2. Activatge venv  (or to reactivate if closed terminal window)
@@ -65,26 +64,25 @@ Linux / Mac: source .my-venv/bin/activate
 ollama pull llama3.18b
 ollama pull mxbai-embed-large
 
-** Running **
+## Running
 1. Have alresco and neo4j running
 2. Run or debug in ide supporting python (Visul Studio Code or Cursor)
 3. Or run: pythoon cmis-graphrag
 4. Note cmis-graphrag-date-time.log files created
 5. Get answer to your configured question
-
 Query: Who started CMIS
 Answer: {'answer': 'The Content Management Interoperability Services (CMIS) draft specification was developed and contributed to by a group of leading ECM vendors, including Alfresco, EMC, IBM, Microsoft, OpenText, Oracle, and SAP. Alfresco Software announced the availability of the first CMIS draft implementation and is a contributing member of the draft technical specification.'}
 2025-06-10 17:49:30,591 - INFO - Neo4j connection closed
 
-Note can set whats going a neo4j console with
+## Note can set whats going a neo4j console with
 MATCH (n) RETURN n limit 25
 MATCH (n) RETURN n
 SHOW INDEXES
 
-[KG graph in console](.KG graph in console.png)
+# KG that gets built in Neo4j for cmispress.pdf
+[KG graph in console](https://github.com/stevereiner/cmis-graphrag/blob/main/KG%20graph%20in%20console.png)
 
-
-** Can cleanup with (don't touch other indexes) **
+## Can cleanup with (don't touch other indexes)
 MATCH (n) DETACH DELETE n
 MATCH (n) RETURN n
 DROP INDEX __entity__id IF EXISTS
