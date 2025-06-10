@@ -22,19 +22,20 @@ Your doc mgt server needs to support CMIS 1.1 (like Alfresco)
 Neo4j versions supported:
 Neo4j >=5.18.1
 
-You can use:
-Self Hosted enerterprise server
-Free self hosted community server (requiring enterprise is not documented)
-Free Neo4j desktop (has enterprise version in it) (was testing with this)
-Neo4j AuraDB cloud service >=5.18.0 (Not free or professional tier since need GDS)
+## You can use:
+- Self Hosted enerterprise server
+- Free self hosted community server (requiring enterprise is not documented)
+- Free Neo4j desktop (has enterprise version in it) (was testing with this)
+- Neo4j AuraDB cloud service >=5.18.0 (Not free or professional tier since need GDS)
 Think need either AuraDS or AuraDB business critical with GDS sessions or with AuraDS integration
 Also AuraDB includes a only subset of APOC Core functions and procedures, nor you can config
 APOC Full is not available in any AuraDB tier for security reasons
 
-1. APOC and GDS plugins install not needed in AuraDBs (see above for restrictions)
-2. Enterprise server: you copy gds jar copy from your /product and apoc jar from /labs to the /plugins dir, restart
-3. Community server: Extra step to download apoc and gds jars and copy to the /plugins dir, restart
-4. In the Neo4j Desktop version, you can install the plugins in the expand out side panel in the GUI. It does a restart 
+Install needed APOC and GDS plugins
+- APOC and GDS plugins install not needed in AuraDBs (see above for restrictions)
+- Enterprise server: you copy gds jar copy from your /product and apoc jar from /labs to the /plugins dir, restart
+- Community server: Extra step to download apoc and gds jars and copy to the /plugins dir, restart
+- In the Neo4j Desktop version, you can install the plugins in the expand out side panel in the GUI. It does a restart 
 whith each plugin you enable
 
 ## Python versions supported by neo4j-graphrag:
