@@ -18,6 +18,8 @@ logger = logging.getLogger(__name__)
 
 
 # Optional Schema definition
+USE_SCHEMA = False  # Global flag to control schema usage
+
 ENTITIES = [
     # entities can be defined with a simple label...
     "Person",
@@ -49,7 +51,10 @@ MODEL_PARAMS = {
     "temperature": 0.0
 }
 
-INDEX_NAME = "vector-index-name"
+# Index configuration
+INDEX_BASE_NAME = "vector_index"
+INDEX_LABEL = "Chunk"
+INDEX_EMBEDDING_PROPERTY = "embedding"
 
 
 class Neo4jHandler:
@@ -75,27 +80,40 @@ class Neo4jHandler:
                     raise ValueError("OpenAI API key is required when use_openai is True")
                 self.llm = OpenAILLM(api_key=api_key, model_name=openai_model, model_params=MODEL_PARAMS)
                 self.embedder = OpenAIEmbeddings(model="text-embedding-3-large")
+                self.model_type = "openai"
+                # Set OpenAI specific index parameters
+                self.index_dimensions = 3072
+                self.similarity_fn = "cosine"
+                self.index_name = f"{INDEX_BASE_NAME}_openai"
                 logger.info(f"Successfully initialized OpenAI components with model: {openai_model}")
             else:
                 self.llm = OllamaLLM(model_name=ollama_model, model_params=MODEL_PARAMS)
-                self.embedder = OllamaEmbeddings(model="mistral-embed")
+                self.embedder = OllamaEmbeddings(model="mxbai-embed-large")
+                self.model_type = "ollama"
+                # Set Ollama specific index parameters
+                self.index_dimensions = 1024
+                self.similarity_fn = "cosine"
+                self.index_name = f"{INDEX_BASE_NAME}_ollama"
                 logger.info(f"Successfully initialized Ollama components with model: {ollama_model}")
-
-            
-            # Set up vector index
-            logger.info("Setting up vector index...")
-            create_vector_index(
-                self.driver,
-                INDEX_NAME,
-                label="Chunk",
-                embedding_property="embedding",
-                dimensions=3072,
-                similarity_fn="euclidean",
-            )
-            logger.info("Vector index setup completed")            
+                
+            # Set up vector index if it doesn't exist
+            logger.info("Checking for existing vector index...")
+            if not self._index_exists(self.index_name):
+                logger.info(f"Creating new vector index: {self.index_name}")
+                create_vector_index(
+                    self.driver,
+                    self.index_name,
+                    label=INDEX_LABEL,
+                    embedding_property=INDEX_EMBEDDING_PROPERTY,
+                    dimensions=self.index_dimensions,
+                    similarity_fn=self.similarity_fn,
+                )
+                logger.info(f"Vector index setup completed with name: {self.index_name}")
+            else:
+                logger.info(f"Vector index {self.index_name} already exists")
 
             # Initialize retriever
-            self.retriever = VectorRetriever(self.driver, INDEX_NAME, self.embedder)
+            self.retriever = VectorRetriever(self.driver, self.index_name, self.embedder)
 
             # Initialize GraphRAG
             self.graphrag = GraphRAG(
@@ -107,22 +125,43 @@ class Neo4jHandler:
             logger.error(f"Error initializing Neo4jHandler: {str(e)}")
             raise
 
+    def _index_exists(self, index_name: str) -> bool:
+        """Check if a vector index exists in Neo4j."""
+        try:
+            with self.driver.session() as session:
+                result = session.run(
+                    "SHOW INDEXES YIELD name WHERE name = $index_name",
+                    index_name=index_name
+                )
+                return result.single() is not None
+        except Exception as e:
+            logger.error(f"Error checking if index exists: {str(e)}")
+            return False
+
     async def process_document(self, doc_id: str, doc_name: str, content: str) -> None:
         """Process a single document and build a knowledge graph."""
         try:
             logger.info(f"Processing document: {doc_name}")
             
             # Build the knowledge graph
-            kg_builder = SimpleKGPipeline(
-                embedder=self.embedder,
-                driver=self.driver,
-                llm=self.llm,
-                entities=ENTITIES,
-                relations=RELATIONS,
-                potential_schema=POTENTIAL_SCHEMA,
-                enforce_schema="NONE",
-                from_pdf=content.endswith('.pdf'),
-            )
+            if USE_SCHEMA:
+                kg_builder = SimpleKGPipeline(
+                    embedder=self.embedder,
+                    driver=self.driver,
+                    llm=self.llm,
+                    entities=ENTITIES,
+                    relations=RELATIONS,
+                    potential_schema=POTENTIAL_SCHEMA,
+                    enforce_schema="NONE",
+                    from_pdf=content.endswith('.pdf'),
+                )
+            else:
+                kg_builder = SimpleKGPipeline(
+                    embedder=self.embedder,
+                    driver=self.driver,
+                    llm=self.llm,
+                    from_pdf=content.endswith('.pdf'),
+                )
             
             if content.endswith('.pdf'):
                 await kg_builder.run_async(file_path=content)

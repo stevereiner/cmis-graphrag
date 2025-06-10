@@ -42,9 +42,11 @@ NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "password")
 # Define OpenAI and Ollama configuration
 USE_OPENAI = os.getenv("USE_OPENAI", "true").strip().lower() in ("true")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") 
-OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3")
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1:8b")
 
+# Define question configuration
+QUESTION = os.getenv("QUESTION", "Who started CMIS?")
 
 async def main():
     try:
@@ -85,11 +87,11 @@ async def main():
         )
         
         logger.info("Document processing completed")
-        
         # Example query
         logger.info("Starting query processing...")
-        #question = "Who is Paul Atreides?"
-        question = "Who created CMIS?"
+
+        #question = "Who is Paul Atreides?" # for testing
+        question = QUESTION
         answer = await neo4j_handler.query_graph(question)
         logger.info("Query processing completed")
         print("\nQuery:", question)
