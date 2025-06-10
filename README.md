@@ -11,7 +11,7 @@ vector embeddings / RAG, and KG graphs / GraphRAG :
 
 [Libraries Supporting KG building and GraphRAG](https://github.com/stevereiner/cmis-graphrag/blob/main/Libraries%20Supporting%20KG%20building%20and%20GraphRAG.md)
 
-Supports using OpenAI (gpt-4.1 etc.) or Ollama LLMs (llmma3.1 etc.) models
+Supports using OpenAI (gpt-4.1 etc.) or Ollama LLMs (llama3.1 etc.) models
 
 Your doc mgt server needs to support CMIS 1.1 (like Alfresco)
 
