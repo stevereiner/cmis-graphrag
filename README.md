@@ -38,10 +38,10 @@ APOC Full is not available in any AuraDB tier for security reasons
 whith each plugin you enable
 
 ## Python versions supported by neo4j-graphrag:
-Python 3.12
-Python 3.11
-Python 3.10
-Python 3.9
+- Python 3.12
+- Python 3.11
+- Python 3.10
+- Python 3.9
 
 ## To Configure
 1. Copy dot-env-sample.txt to .env to configure for your CMIS repository, Neo4j server, whether to use openai,
@@ -74,20 +74,20 @@ Query: Who started CMIS
 Answer: {'answer': 'The Content Management Interoperability Services (CMIS) draft specification was developed and contributed to by a group of leading ECM vendors, including Alfresco, EMC, IBM, Microsoft, OpenText, Oracle, and SAP. Alfresco Software announced the availability of the first CMIS draft implementation and is a contributing member of the draft technical specification.'}
 2025-06-10 17:49:30,591 - INFO - Neo4j connection closed
 
-## Note can set whats going a neo4j console with
-MATCH (n) RETURN n limit 25
-MATCH (n) RETURN n
-SHOW INDEXES
+## Note can see whats going a neo4j console with
+- MATCH (n) RETURN n limit 25
+- MATCH (n) RETURN n
+- SHOW INDEXES
 
 # KG that gets built in Neo4j for cmispress.pdf
 [KG graph in console](https://github.com/stevereiner/cmis-graphrag/blob/main/KG%20graph%20in%20console.png)
 
 ## Can cleanup with (don't touch other indexes)
-MATCH (n) DETACH DELETE n
-MATCH (n) RETURN n
-DROP INDEX __entity__id IF EXISTS
-DROP INDEX vector_index_openai IF EXISTS
-DROP INDEX vector_index_ollama IF EXISTS
-SHOW INDEXES
+- MATCH (n) DETACH DELETE n
+- MATCH (n) RETURN n
+- DROP INDEX __entity__id IF EXISTS
+- DROP INDEX vector_index_openai IF EXISTS
+- DROP INDEX vector_index_ollama IF EXISTS
+- SHOW INDEXES
 
 
