@@ -1,6 +1,6 @@
 # CMIS-GraphRAG
 
-## A Python sample that gets docs from a folder in a CMIS server, builds Knowledge Graphs and vectors in Neoj4, and supports AI queries with RAG and GraphRAG
+## A Python sample that gets docs from a folder in a CMIS server, builds Knowledge Graphs and Vectors in Neoj4, and supports AI queries with RAG and GraphRAG
 
 For CMIS, the cmislib python package was used
 
