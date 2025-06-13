@@ -6,7 +6,7 @@ For CMIS, the cmislib python package was used
 
 For Neo4j KG building and GraphRAG, the Neo4j neo4j-graphrag python package was used
 
-Uses FastAPI, has REST apis. Question and CMIS folder path forn env varibles, answer in terminal output
+Question and CMIS folder path from env varibles, answer in terminal output
 
 # Info on CMIS
 
