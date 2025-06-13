@@ -69,7 +69,7 @@ Question and CMIS folder path from env varibles, answer in terminal output
 - Python 3.10
 - Python 3.9
 
-# Usage
+# Usage of cmis-graphrag
 
 ## To Configure
 1. Copy dot-env-sample.txt to .env to configure for your CMIS repository, Neo4j server, whether to use openai,
