@@ -23,9 +23,9 @@ Question and CMIS folder path from env varibles, answer in terminal output
 
 # Requirements for cmislib package
 - Name: cmislib Version: 0.7.0
-- [cmislib 0.7.0 PyPi.org]https://pypi.org/project/cmislib/
+- [cmislib 0.7.0 PyPi.org](https://pypi.org/project/cmislib/)
 - Summary: Apache Chemistry CMIS client library for Python
-- Home-page: http://chemistry.apache.org/
+- [Apache Chemistry](http://chemistry.apache.org/)
 - cmislib 0.7.0 has support for Python 3.x, previous were for Python 2.x
 
 ## Your CMIS server needs to support CMIS 1.0 or CMIS 1.1
